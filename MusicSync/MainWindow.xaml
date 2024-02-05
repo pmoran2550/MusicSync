@@ -1,0 +1,62 @@
+﻿<Window x:Class="MusicSync.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicSync"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1200">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="ForestGreen"/>
+        <Grid Grid.Column="1" Background="Red">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="20,50,20,5">
+                <StackPanel Orientation="Vertical">
+                    <Label  Foreground="White" >
+                        <TextBlock Text="Folder containing local music files: "/>
+                    </Label>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" x:Name="folderTextBox" Margin="0,0,5,0" Text="{Binding Path=MusicFolder}" Foreground="Black"/>
+                        <Button Grid.Column="1" Name="buttonGetMusicFolder" Margin="5,0,5,0" Click="getMusicFolder_Click">
+                            <TextBlock Text="Browse"/>
+                        </Button>
+                        <Button Grid.Column="2" Margin="5,0,0,0" Click="getMusic_Click">
+                            <TextBlock Text="Get Music"/>
+                        </Button>
+                    </Grid>
+                    <Label Name="labelFolderErr" Foreground="Black">
+                        <TextBlock Text="{Binding Path=ErrorText}"/>
+                    </Label>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1" Margin="20,5,20,50">
+                <TreeView Name="treeviewLocalMusic" Foreground="Black">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type local:Artist}" ItemsSource="{Binding Albums}">
+                            <TextBlock Text="{Binding Name}" />
+                        </HierarchicalDataTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type local:Album}" ItemsSource="{Binding Songs}">
+                            <TextBlock Text="{Binding Title}"/>
+                        </HierarchicalDataTemplate>
+                        <DataTemplate DataType="{x:Type local:Song}">
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
+                <ProgressBar Name="progressBar" Width="200" Height="20" Margin="10" Minimum="0" Maximum="100" Value="0" IsIndeterminate="True" />
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
