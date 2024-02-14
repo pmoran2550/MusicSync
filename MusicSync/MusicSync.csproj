@@ -15,4 +15,22 @@
     <Page Remove="NewFolder1\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\error20.png" />
+    <None Remove="Resources\Good20a.jpg" />
+    <None Remove="Resources\Good20c.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Error20.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Good20a.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Good20c.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

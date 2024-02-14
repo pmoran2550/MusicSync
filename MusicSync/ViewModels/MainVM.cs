@@ -12,6 +12,9 @@ namespace MusicSync
 {
     public class MainVM : DispatchNotifyPropertyChanged
     {
+        const string goodImg = "Resources\\Good20c.png";
+        const string errorImg = "Resources\\Error20.png";
+
         private string _musicFolder;
         public string MusicFolder 
         {
@@ -145,6 +148,8 @@ namespace MusicSync
                     {
                         if (artistCount++ % 10 == 0 && progress != null)
                             progress.Report(artistCount);
+                        if (artistCount > 20)
+                            break;
                         if (!string.IsNullOrEmpty(artistDirectory))
                         {
                             string shortArtistName = new DirectoryInfo(artistDirectory).Name;
