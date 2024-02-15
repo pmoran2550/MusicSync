@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MusicSync"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:MusicSync" 
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
         Title="MainWindow" Height="800" Width="1200">
+    <Window.Resources>
+        <BitmapImage x:Key="GoodImageSource" UriSource="Resources/Good20c.png" />
+        <BitmapImage x:Key="ErrorImageSource" UriSource="Resources/Error20.png" />
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -45,13 +49,22 @@
                 <TreeView Name="treeviewLocalMusic" Foreground="Black">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type local:Artist}" ItemsSource="{Binding Albums}">
-                            <TextBlock Text="{Binding Name}" />
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="10" Width="10" Margin="0,0,2,0" Source="{StaticResource GoodImageSource}"/>
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
                         </HierarchicalDataTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type local:Album}" ItemsSource="{Binding Songs}">
-                            <TextBlock Text="{Binding Title}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="10" Width="10" Margin="0,0,2,0" Source="{StaticResource ErrorImageSource}"/>
+                                <TextBlock Text="{Binding Title}"/>
+                            </StackPanel>
                         </HierarchicalDataTemplate>
                         <DataTemplate DataType="{x:Type local:Song}">
-                            <TextBlock Text="{Binding Title}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="10" Width="10" Margin="0,0,2,0" Source="{StaticResource GoodImageSource}"/>
+                                <TextBlock Text="{Binding Title}"/>
+                            </StackPanel>
                         </DataTemplate>
                     </TreeView.Resources>
                 </TreeView>
