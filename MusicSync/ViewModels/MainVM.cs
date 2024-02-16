@@ -118,6 +118,9 @@ namespace MusicSync
             _musicFolder = "";
             _errorText = "";
             _musicCollection = new ObservableCollection<Artist>();
+            _artist = new ObservableCollection<Album>();
+            _album = new ObservableCollection<Song>();
+            _song = new Song();
         }
 
         public async Task GetLocalMusicAsync()
@@ -129,6 +132,18 @@ namespace MusicSync
             await Task.Run(() =>
             {
                 GetLocalMusic(progress);
+            });
+        }
+
+        public async Task CheckForErrorsAsync()
+        {
+            IProgress<int> progress = new Progress<int>(filesDone =>
+            {
+                ErrorText = "Files checked for errors: " + filesDone.ToString();
+            });
+            await Task.Run(() =>
+            {
+                CheckForErrors(progress);
             });
         }
 
@@ -146,10 +161,11 @@ namespace MusicSync
                     artistDirectories.Sort();
                     foreach (string artistDirectory in artistDirectories)
                     {
-                        if (artistCount++ % 10 == 0 && progress != null)
+                        artistCount++;
+                        if (artistCount % 10 == 0 && progress != null)
                             progress.Report(artistCount);
-                        if (artistCount > 20)
-                            break;
+                        //if (artistCount > 20) // for debugging
+                        //    break;
                         if (!string.IsNullOrEmpty(artistDirectory))
                         {
                             string shortArtistName = new DirectoryInfo(artistDirectory).Name;
@@ -208,6 +224,59 @@ namespace MusicSync
             }
             OnPropertyChanged(nameof(MusicCollection));
         }
+
+        public void CheckForErrors(IProgress<int> progress)
+        {
+            ErrorText = string.Empty;
+            if (progress != null) { progress.Report(0); }
+
+            try
+            {
+                int artistCount = 0;
+                foreach (Artist artist in MusicCollection)
+                {
+                    artistCount++;
+                    if (artistCount % 10 == 0 && progress != null)
+                        progress.Report(artistCount);
+
+                    if (artist.Albums.Count == 0)
+                    {
+                        artist.ArtistError = ErrorStatus.Missing_Albums;
+                    }
+                    else
+                    {
+                        foreach (Album album in artist.Albums)
+                        {
+                            if (album.Songs.Count == 0)
+                            {
+                                album.AlbumError = ErrorStatus.Missing_Songs;
+                                artist.ArtistError = ErrorStatus.Missing_Songs;
+                            }
+                            else
+                            {
+                                
+                                foreach (Song song in album.Songs)
+                                {
+                                    List<Song> songMatches = album.Songs.Where(item => item.Title == song.Title).ToList();
+                                    if (songMatches.Count > 1)
+                                    {
+                                        song.SongError = ErrorStatus.Duplicate;
+                                        album.AlbumError = ErrorStatus.Duplicate;
+                                        artist.ArtistError = ErrorStatus.Duplicate;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorText = "Exception checking for local music errors: " + ex.Message;
+            }
+            OnPropertyChanged(nameof(MusicCollection));
+        }
+
 
         public void ClearMusicCollection()
         {

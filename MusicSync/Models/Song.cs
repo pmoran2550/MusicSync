@@ -10,11 +10,13 @@ namespace MusicSync
     {
         public string Title { get; set; }
         public int TrackNumber { get; set; }
+        public ErrorStatus SongError { get; set; }
 
         public Song() 
         { 
             Title = string.Empty;
             TrackNumber = 0;
+            SongError = ErrorStatus.No_Error;
         }
     }
 }

@@ -22,15 +22,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\Error20.png">
+    <Resource Include="Resources\Error20.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <Content Include="Resources\Good20a.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Good20c.png">
+    <Resource Include="Resources\Good20c.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
   </ItemGroup>
 
 </Project>

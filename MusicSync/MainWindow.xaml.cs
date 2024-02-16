@@ -43,6 +43,7 @@ namespace MusicSync
             viewModel.ErrorText = "";
             progressBar.Visibility = Visibility.Visible;
             await viewModel.GetLocalMusicAsync();
+            await viewModel.CheckForErrorsAsync();
             progressBar.Visibility = Visibility.Hidden;
             viewModel.ErrorText = "All done getting local music.";
 

@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicSync" 
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
+        xmlns:localConverter="clr-namespace:MusicSync.Converters"
         Title="MainWindow" Height="800" Width="1200">
     <Window.Resources>
         <BitmapImage x:Key="GoodImageSource" UriSource="Resources/Good20c.png" />
         <BitmapImage x:Key="ErrorImageSource" UriSource="Resources/Error20.png" />
+        <localConverter:ErrorToImageConverter x:Key="errorImageConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -50,19 +52,19 @@
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type local:Artist}" ItemsSource="{Binding Albums}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Height="10" Width="10" Margin="0,0,2,0" Source="{StaticResource GoodImageSource}"/>
+                                <Image Height="10" Width="10" Margin="0,0,2,0" Source="{Binding Path=ArtistError, Converter={StaticResource errorImageConverter}}"/>
                                 <TextBlock Text="{Binding Name}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type local:Album}" ItemsSource="{Binding Songs}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Height="10" Width="10" Margin="0,0,2,0" Source="{StaticResource ErrorImageSource}"/>
+                                <Image Height="10" Width="10" Margin="0,0,2,0" Source="{Binding Path=AlbumError, Converter={StaticResource errorImageConverter}}"/>
                                 <TextBlock Text="{Binding Title}"/>
                             </StackPanel>
                         </HierarchicalDataTemplate>
                         <DataTemplate DataType="{x:Type local:Song}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Height="10" Width="10" Margin="0,0,2,0" Source="{StaticResource GoodImageSource}"/>
+                                <Image Height="10" Width="10" Margin="0,0,2,0" Source="{Binding Path=SongError, Converter={StaticResource errorImageConverter}}"/>
                                 <TextBlock Text="{Binding Title}"/>
                             </StackPanel>
                         </DataTemplate>

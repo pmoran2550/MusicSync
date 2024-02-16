@@ -11,11 +11,13 @@ namespace MusicSync
     {
         public string Name { get; set; }
         public ObservableCollection<Album> Albums { get; set; }
+        public ErrorStatus ArtistError { get; set; }
 
         public Artist()
         {
             Name = "";
             Albums = new ObservableCollection<Album>();
+            ArtistError = ErrorStatus.No_Error;
         }
     }
 }
