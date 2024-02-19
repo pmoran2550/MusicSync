@@ -16,11 +16,12 @@ namespace MusicSync
             viewModel = new MainVM();
             DataContext = viewModel;
             progressBar.Visibility = Visibility.Hidden;
+            localMusicGrid.DataContext = viewModel.LocalMusicVM;
         }
 
         private void getMusicFolder_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.ErrorText = "";
+            viewModel.LocalMusicVM.ErrorText = "";
             OpenFolderDialog openFolderDialog = new OpenFolderDialog();
             openFolderDialog.Multiselect = false;
             openFolderDialog.Title = "Select Music Folder";
@@ -29,25 +30,25 @@ namespace MusicSync
 
             if (folder == true)
             {
-                viewModel.MusicFolder = openFolderDialog.FolderName;
+                viewModel.LocalMusicVM.MusicFolder = openFolderDialog.FolderName;
             }
             else
             {
-                viewModel.ErrorText = "Unable to get music folder";
+                viewModel.LocalMusicVM.ErrorText = "Unable to get music folder";
             }
         }
 
         private async void getMusic_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.ClearMusicCollection();
-            viewModel.ErrorText = "";
+            viewModel.LocalMusicVM.ClearMusicCollection();
+            viewModel.LocalMusicVM.ErrorText = "";
             progressBar.Visibility = Visibility.Visible;
-            await viewModel.GetLocalMusicAsync();
-            await viewModel.CheckForErrorsAsync();
+            await viewModel.LocalMusicVM.GetLocalMusicAsync();
+            await viewModel.LocalMusicVM.CheckForErrorsAsync();
             progressBar.Visibility = Visibility.Hidden;
-            viewModel.ErrorText = "All done getting local music.";
+            viewModel.LocalMusicVM.ErrorText = "All done getting local music.";
 
-            treeviewLocalMusic.ItemsSource = viewModel.MusicCollection;
+            treeviewLocalMusic.ItemsSource = viewModel.LocalMusicVM.MusicCollection;
         }
     }
 }

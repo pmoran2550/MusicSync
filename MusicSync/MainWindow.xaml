@@ -18,7 +18,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Background="ForestGreen"/>
-        <Grid Grid.Column="1" Background="Red">
+        <Grid Grid.Column="1" Name="localMusicGrid" Background="Red">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="5*"/>
