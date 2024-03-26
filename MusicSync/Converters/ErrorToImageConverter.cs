@@ -12,6 +12,7 @@ namespace MusicSync.Converters
     {
         Uri uriGoodSource = new Uri("pack://application:,,,/Resources/Good20c.png");
         Uri uriErrorSource = new Uri("pack://application:,,,/Resources/error20.png");
+        Uri uriWarningSource = new Uri("pack://application:,,,/Resources/warning20.png");
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -21,6 +22,10 @@ namespace MusicSync.Converters
             if (value.Equals(ErrorStatus.No_Error))
             {
                 uriToUse = uriGoodSource;
+            }
+            else if (value.Equals(ErrorStatus.Duplicate))
+            {
+                uriToUse = uriWarningSource;
             }
             else
             {

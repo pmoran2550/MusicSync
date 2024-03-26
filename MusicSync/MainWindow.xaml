@@ -10,15 +10,11 @@
     <Window.Resources>
         <BitmapImage x:Key="GoodImageSource" UriSource="Resources/Good20c.png" />
         <BitmapImage x:Key="ErrorImageSource" UriSource="Resources/Error20.png" />
+        <BitmapImage x:Key="WarningImageSource" UriSource="Resources/warning20.png" />
         <localConverter:ErrorToImageConverter x:Key="errorImageConverter"/>
     </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Background="ForestGreen"/>
-        <Grid Grid.Column="1" Name="localMusicGrid" Background="Red">
+        <Grid Name="localMusicGrid" Background="Red">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="5*"/>

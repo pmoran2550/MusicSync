@@ -7,9 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicSync
-{ 
+{
     public class LocalMusicVM : DispatchNotifyPropertyChanged
     {
+        private static readonly log4net.ILog localMusicLog = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         const string goodImg = "Resources\\Good20c.png";
         const string errorImg = "Resources\\Error20.png";
 
@@ -143,6 +145,7 @@ namespace MusicSync
             {
                 if (Directory.Exists(MusicFolder))
                 {
+                    localMusicLog.Error("Getting local music");
                     int artistCount = 0;
                     List<string> artistDirectories = new List<string>(Directory.EnumerateDirectories(MusicFolder));
                     artistDirectories.Sort();
@@ -203,11 +206,13 @@ namespace MusicSync
                 else
                 {
                     ErrorText = "Given directory doesn't exist";
+                    localMusicLog.Error(ErrorText);
                 }
             }
             catch (Exception ex)
             {
                 ErrorText = "Exception getting local music: " + ex.Message;
+                localMusicLog.Error(ErrorText);
             }
             OnPropertyChanged(nameof(MusicCollection));
         }
@@ -240,6 +245,7 @@ namespace MusicSync
                     if (artist.Albums.Count == 0)
                     {
                         artist.ArtistError = ErrorStatus.Missing_Albums;
+                        localMusicLog.ErrorFormat("Missing album error on {0}", artist.Name);
                     }
                     else
                     {
@@ -249,6 +255,7 @@ namespace MusicSync
                             {
                                 album.AlbumError = ErrorStatus.Missing_Songs;
                                 artist.ArtistError = ErrorStatus.Missing_Songs;
+                                localMusicLog.ErrorFormat("Missing songs error on {0}, {1}", album.Title, artist.Name);
                             }
                             else
                             {
@@ -261,6 +268,7 @@ namespace MusicSync
                                         song.SongError = ErrorStatus.Duplicate;
                                         album.AlbumError = ErrorStatus.Duplicate;
                                         artist.ArtistError = ErrorStatus.Duplicate;
+                                        localMusicLog.ErrorFormat("Duplicate error on {0}, {1}, {2}", song.Title, album.Title, artist.Name);
                                     }
                                 }
                             }
@@ -271,6 +279,7 @@ namespace MusicSync
             catch (Exception ex)
             {
                 ErrorText = "Exception checking for local music errors: " + ex.Message;
+                localMusicLog.ErrorFormat(ErrorText);
             }
             OnPropertyChanged(nameof(MusicCollection));
         }

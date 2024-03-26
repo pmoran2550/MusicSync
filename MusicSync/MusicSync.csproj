@@ -9,28 +9,52 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Clients\**" />
     <Compile Remove="NewFolder1\**" />
+    <EmbeddedResource Remove="Clients\**" />
     <EmbeddedResource Remove="NewFolder1\**" />
+    <None Remove="Clients\**" />
     <None Remove="NewFolder1\**" />
+    <Page Remove="Clients\**" />
     <Page Remove="NewFolder1\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Error.cs" />
+    <Compile Remove="Models\ErrorSource.cs" />
+    <Compile Remove="Models\IResource.cs" />
+    <Compile Remove="Models\LibraryArtist.cs" />
+    <Compile Remove="Models\LibraryArtistResponse.cs" />
+    <Compile Remove="Models\ResponseRoot.cs" />
+    <Compile Remove="ViewModels\CloudMusicVM.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\error20.png" />
-    <None Remove="Resources\Good20a.jpg" />
     <None Remove="Resources\Good20c.png" />
+    <None Remove="Resources\warning20.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\Error20.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Resources\Good20a.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <PackageReference Include="log4net" Version="2.0.17" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="8.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.3.1" />
     <Resource Include="Resources\Good20c.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\warning20.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
